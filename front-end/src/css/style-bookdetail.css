@@ -1,0 +1,171 @@
+.page-container {
+    height: 100vh;
+}
+
+.left-section {
+    position: relative;
+    width: 40%;
+    padding-top: 50px;
+    /* để chừa chỗ cho ảnh */
+    border-radius: 20px;
+    overflow: hidden;
+    background: rgba(247, 247, 247, 1) !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    height: 1000px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.h-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 135px;
+    /* width mỗi item */
+    transition: 0.3s;
+    gap: 8px;
+    overflow: hidden;
+    max-width: 48em;
+}
+
+.text-limit {
+    display: inline-block;
+    max-width: 135px;
+    /* tùy bạn */
+    max-height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    transition: 0.3s ease;
+    color: white;
+}
+
+.text-limit:hover {
+    color: orange;
+}
+
+.episodes {
+    border-radius: 20px;
+    height: 100%;
+    background-color: rgba(247, 247, 247, 1) !important;
+}
+
+li {
+    list-style-type: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+li>div {
+    justify-content: start;
+    align-items: center;
+}
+
+.img_icon {
+    width: 4em;
+}
+
+.flex-rowed {
+    gap: 0.5em;
+}
+
+.blur-bg {
+    position: absolute;
+    top: 0;
+    height: 300px;
+    /* CHỈ BLUR PHẦN TRÊN */
+    left: 0;
+    right: 0;
+    background-size: cover;
+    background-position: center top;
+    filter: blur(30px);
+    transform: scale(1.4);
+    z-index: 1;
+}
+
+.blur-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(255, 255, 255, 1));
+    z-index: 2;
+}
+
+.cover {
+    position: relative;
+    width: 180px;
+    height: 260px;
+    margin: 0 auto;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    z-index: 3;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.info {
+    position: relative;
+    z-index: 3;
+    padding: 20px;
+    text-align: center;
+}
+
+.text-centered {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    height: 12em;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.author {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.horizontal-grid {
+    display: flex;
+    grid-auto-flow: column;
+    grid-auto-columns: 150px;
+    /* width mỗi item */
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.category-bar {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 8px 12px;
+    border-bottom: 2px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    border-bottom: 2px solid #facc15;
+    /* vàng */
+    color: #f59e0b;
+}
