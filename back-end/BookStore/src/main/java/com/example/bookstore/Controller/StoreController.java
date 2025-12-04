@@ -135,4 +135,12 @@ public class StoreController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/api/store/book/chapter/byBook/{id}")
+    public ResponseEntity<List<ChapterResponse>> getChapterByBook(@PathVariable("id") Long id){
+        ChapterResponse chapter = storeService.findChapterById(id);
+        Long bookId = chapter.getBookId();
+        List<ChapterResponse> chapterResponseList = storeService.findChaptersByBookId(bookId);
+        return ResponseEntity.ok(chapterResponseList);
+    }
 }

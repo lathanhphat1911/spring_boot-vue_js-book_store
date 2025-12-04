@@ -45,3 +45,15 @@ export function getBookFromSameAuthor(id) {
 export function getChapterById(id) {
     return axios.get(`${API_BASE}/book/chapter/${id}`);
 }
+
+export function getChapterFromSameBookById(id) {
+    return axios.get(`${API_BASE}/book/chapter/byBook/${id}`);
+}
+
+export function getNextChapterById(id){
+    return axios.get(`${API_BASE}/book/chapter/next/${id}`);
+}
+
+export function getPreviousChapterById(id){
+    return axios.get(`${API_BASE}/book/chapter/previous/${id}`);
+}
