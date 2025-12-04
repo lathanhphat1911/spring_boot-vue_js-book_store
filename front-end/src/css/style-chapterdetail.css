@@ -12,3 +12,12 @@
     width: 100%;
     font-size: 1.4em;
 }
+
+.chapter-choose{
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.chapter-choose:hover{
+    transform: scale(1.04);
+}
