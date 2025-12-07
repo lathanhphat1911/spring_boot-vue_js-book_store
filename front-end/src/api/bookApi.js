@@ -61,3 +61,7 @@ export function getPreviousChapterById(id){
 export function getBookByTag(id){
     return axios.get(`${API_BASE}/books/tags/${id}`);
 }
+
+export function searchBookByTitleLike(title){
+    return axios.get(`${API_BASE}/book/search/${title}`);
+}

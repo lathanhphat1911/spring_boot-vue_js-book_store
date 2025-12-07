@@ -186,6 +186,13 @@ public class StoreServiceImplementation implements StoreService {
     public List<BookResponse> findBookByTagId(Long tagId) {
         return bookRepository.findByTags_Id(tagId).stream().map(book -> modelMapper.map(book, BookResponse.class)).toList();
     }
+
+    @Override
+    public List<BookResponse> findBookLikeTitle(String name) {
+        return bookRepository.findBookByTitleContainingIgnoreCase(name)
+                .stream()
+                .map(book -> modelMapper.map(book, BookResponse.class)).toList();
+    }
 //
 //    @Override
 //    public void saveAll(List<Chapter> newChapters) {

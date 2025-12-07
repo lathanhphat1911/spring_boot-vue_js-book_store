@@ -52,4 +52,6 @@ public interface StoreService {
     void saveAllChapter(List<Chapter> chapterList);
 
     List<BookResponse> findBookByTagId(Long tagId);
+
+    List<BookResponse> findBookLikeTitle(String name);
 }

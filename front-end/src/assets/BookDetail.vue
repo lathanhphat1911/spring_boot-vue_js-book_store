@@ -8,6 +8,7 @@ import { getBookFromSameAuthor } from '../api/bookApi';
 import { getAllBooks } from '../api/bookApi';
 import navBar from '../assets/implement/nav-bar.vue';
 import { useRouter } from "vue-router";
+import { Alert } from "bootstrap/dist/js/bootstrap.bundle.min";
 
 const route = useRoute();
 
@@ -95,6 +96,7 @@ function goChapterDetail(chapter){
     state: { chapter } 
   });
 }
+
 </script>
 
 <template>
@@ -123,7 +125,7 @@ function goChapterDetail(chapter){
           </div>
         </div>
 
-        <button class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded">
+        <button class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="goChapterDetail(chapters[0])">
           Continue reading
         </button>
 

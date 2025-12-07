@@ -15,6 +15,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     public Book findByTitleLike(String title);
 
+
+
     @Query("SELECT b FROM Book b ORDER BY SIZE(b.buyers) desc")
     List<Book> findBooksByBuyerCount(Pageable pageable);
 

@@ -227,4 +227,10 @@ public class StoreController {
         List<ChapterResponse> chapterResponseList = storeService.findChaptersByBookId(bookId);
         return ResponseEntity.ok(chapterResponseList);
     }
+
+    @GetMapping("/api/store/book/search/{name}")
+    public ResponseEntity<List<BookResponse>> getBooksByName(@PathVariable("name") String name){
+        List<BookResponse> bookResponses = storeService.findBookLikeTitle(name);
+        return ResponseEntity.ok(bookResponses);
+    }
 }

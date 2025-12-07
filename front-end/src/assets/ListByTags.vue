@@ -72,7 +72,7 @@ function goTags(id) {
     <div class="grid grid-cols-6 gap-4">
 
       <!-- Single Book Card -->
-       <div @click="goDetail(book)" class="flex-colled" v-for="(book, index) in books"
+       <div @click="goDetail(book)" style="cursor: pointer;" class="flex-colled" v-for="(book, index) in books"
           :key="book.id">
         <div class="item-images" :style="
           {

@@ -55,7 +55,7 @@ export default {
     data() {
         return {
             categories: [
-                "지금추천", "실시간 랭킹", "오늘신상", "이벤트", "남성인기", "완결작",
+                "Category 1", "Category 1", "Category 1", "Category 1", "Category 1", "완결작",
                 "여성인기", "TV&책", "브랜드"
             ]
         };
