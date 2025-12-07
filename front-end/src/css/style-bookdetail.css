@@ -22,6 +22,17 @@
     border-radius: 20px;
 }
 
+.chapter-scroll {
+  max-height: 450px;   /* chiều cao khung cuộn */
+  overflow-y: auto;    /* bật thanh kéo dọc */
+  padding-right: 5px;  /* chống che chữ */
+}
+
+.font-bold{
+    font-weight: 700;
+    padding-top: 20px;
+}
+
 .h-grid {
     display: grid;
     grid-auto-flow: column;

@@ -1,4 +1,5 @@
 <script setup>
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted, watch, nextTick } from "vue";
 import { getTagsByTop, getImageUrlByGenre } from "../../api/bookApi";
 
@@ -19,6 +20,14 @@ async function loadTags() {
   }
 }
 
+const router = useRouter();
+
+function goTags(id) {
+  router.push({
+    name: "listByTags",
+    params: { id }
+  });
+}
 
 onMounted(() => {
   loadTags();
@@ -28,7 +37,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div v-for="t in tags":key="t" class="featured-item" :style="
+  <div @click="goTags(t.id)" v-for="t in tags":key="t" class="featured-item" :style="
   {
       backgroundImage: `url(${images[t.name]})`,
       backgroundSize: 'cover',

@@ -93,22 +93,32 @@ onMounted(() => {
       <div class="">
         <div class="button-group flex-rowed gap-2">
           <button @click="goPrevious(chapter)" class="btn btn-warning">Previous</button>
-          
+
           <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Chapters List</button>
 
           <button @click="goNext(chapter)" class="btn btn-warning">Next</button>
         </div>
-        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions"
-          aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1"
+          id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Current chapter: {{chapter.title}}</h5>
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Current chapter: {{ chapter.title }}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
-          <div class="offcanvas-body" v-for="a in allChapters" :key="a.id" style="flex-grow: 0;">
-            <button v-if="id == a.id" class="chapter-choose" @click="goChapter(a.id)" style="width: 100%; min-height: 60px; border: 2px orange solid;">{{ a.title }}</button>
-            <button v-else class="chapter-choose" @click="goChapter(a.id)" style="width: 100%; min-height: 60px; border: 1px rgba(0, 0, 0, 0.1) solid;">{{ a.title }}</button>
+          <div class="offcanvas-body chapter-scroll">
+            <div v-for="a in allChapters" :key="a.id" style="flex-grow: 0;">
+              <button v-if="id == a.id" class="chapter-choose" @click="goChapter(a.id)"
+                style="width: 100%; min-height: 60px; border: 2px orange solid;">
+                {{ a.title }}
+              </button>
+
+              <button v-else class="chapter-choose" @click="goChapter(a.id)"
+                style="width: 100%; min-height: 60px; border: 1px rgba(0, 0, 0, 0.1) solid;">
+                {{ a.title }}
+              </button>
+            </div>
           </div>
+
         </div>
       </div>
 

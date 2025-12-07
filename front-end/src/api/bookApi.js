@@ -57,3 +57,7 @@ export function getNextChapterById(id){
 export function getPreviousChapterById(id){
     return axios.get(`${API_BASE}/book/chapter/previous/${id}`);
 }
+
+export function getBookByTag(id){
+    return axios.get(`${API_BASE}/books/tags/${id}`);
+}

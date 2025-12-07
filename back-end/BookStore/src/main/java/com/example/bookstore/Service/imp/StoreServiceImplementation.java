@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -94,7 +95,9 @@ public class StoreServiceImplementation implements StoreService {
             return null;
         }
 
-        return tag.getBooks().get(0).getImageUrl();
+        List<Book> list = new ArrayList<>(tag.getBooks());
+        String image = list.get(1).getImageUrl();
+        return image;
     }
 
     @Override
@@ -151,6 +154,43 @@ public class StoreServiceImplementation implements StoreService {
                         chapter -> modelMapper.map(chapter, ChapterResponse.class)
                 ).toList();
     }
+
+//    @Override
+//    public void deleteByBook(Book book) {
+//        bookRepository.delete(book);
+//    }
+//
+    @Override
+    public Book findBookNByTitle(String bookName) {
+        return bookRepository.findByTitleLike(bookName);
+    }
+
+    @Override
+    public User findUserByName(String seriesAuthor) {
+        User user = userRepository.findByName(seriesAuthor);
+
+        return user;
+    }
+
+    @Override
+    public void saveChapter(Chapter chapter) {
+        chapterRepository.save(chapter);
+    }
+
+    @Override
+    public void saveAllChapter(List<Chapter> chapterList) {
+        chapterRepository.saveAll(chapterList);
+    }
+
+    @Override
+    public List<BookResponse> findBookByTagId(Long tagId) {
+        return bookRepository.findByTags_Id(tagId).stream().map(book -> modelMapper.map(book, BookResponse.class)).toList();
+    }
+//
+//    @Override
+//    public void saveAll(List<Chapter> newChapters) {
+//
+//    }
 
     @Override
     public BookResponse saveBook(BookRequest book) {

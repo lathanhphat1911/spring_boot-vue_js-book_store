@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tags")
@@ -22,5 +24,5 @@ public class Tag {
 
     @ManyToMany(mappedBy = "tags")
     @JsonIgnore
-    private List<Book> books;
+    private Set<Book> books = new HashSet<>();
 }

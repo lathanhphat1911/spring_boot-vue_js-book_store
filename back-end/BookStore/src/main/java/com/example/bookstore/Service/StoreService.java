@@ -42,4 +42,14 @@ public interface StoreService {
     ChapterResponse findChapterById(Long id);
 
     List<ChapterResponse> findChaptersByBookId(Long bookId);
+
+    Book findBookNByTitle(String seriesName);
+
+    User findUserByName(String seriesAuthor);
+
+    void saveChapter(Chapter chapter);
+
+    void saveAllChapter(List<Chapter> chapterList);
+
+    List<BookResponse> findBookByTagId(Long tagId);
 }

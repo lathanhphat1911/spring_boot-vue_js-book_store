@@ -24,6 +24,14 @@ const routes = [{
             import ("../assets/ChapterDetail.vue"),
         props: true
     },
+
+    {
+        path: "/tags/:id",
+        name: "listByTags",
+        component: () =>
+            import ("../assets/ListByTags.vue"),
+        props: true
+    },
 ];
 
 const router = createRouter({

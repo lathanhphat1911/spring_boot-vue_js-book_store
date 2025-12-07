@@ -15,6 +15,7 @@ public class Chapter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String title;
 
     @Column(columnDefinition = "NVARCHAR(MAX)")

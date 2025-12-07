@@ -154,19 +154,21 @@ function goChapterDetail(chapter){
           <div v-if="currentTab === 'Episodes'">
             <h6 class="text-lg font-bold ps-3"><strong>Total: {{ chapters.length }}</strong></h6>
             <hr>
-            <ul>
-              <li v-for="ch in chapters" :key="ch.id" class="flex items-center justify-between py-3 border-b">
+            <div class="chapter-scroll">
+              <ul>
+                <li v-for="ch in chapters" :key="ch.id" class="flex items-center justify-between py-3 border-b">
 
 
-                <div class="flex-rowed items-center gap-3" @click="goChapterDetail(ch)">
-                  <img :src="book.imageUrl" class="rounded img_icon" />
-                  <div>
-                    <p class="font-semibold">{{ ch.title }}</p>
-                    <p style="color: gray; font-weight: 0; max-width: fit-content;" class="text-limit text-gray-500 text-sm">{{ ch.content }}</p>
+                  <div class="flex-rowed items-center gap-3" @click="goChapterDetail(ch)">
+                    <img :src="book.imageUrl" class="rounded img_icon" />
+                    <div>
+                      <p class="font-bold">{{ ch.title }}</p>
+                      <p style="color: gray; font-weight: 0; max-width: fit-content;" class="text-limit">{{ ch.content }}</p>
+                    </div>
                   </div>
-                </div>
-              </li>
-            </ul>
+                </li>
+              </ul>
+            </div>
           </div>
           <div v-else>
             <h6 class="text-lg font-bold ps-3"><Strong>Story</Strong></h6>
