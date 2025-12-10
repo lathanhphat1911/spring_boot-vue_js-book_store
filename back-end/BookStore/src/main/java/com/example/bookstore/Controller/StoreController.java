@@ -30,10 +30,12 @@ import java.util.Scanner;
 public class StoreController {
     private final StoreService storeService;
 
-    private void setup(String bookName){
+    private void setup(Long id){
         try {
             // Tìm truyện
-            Document search = Jsoup.connect("https://docln.net/tim-kiem?keywords=" + bookName).get();
+            BookResponse book = storeService.findBookById(id);
+
+            Document search = Jsoup.connect("https://docln.net/tim-kiem?keywords=" + book.getTitle()).get();
             Element series_choose = search.selectFirst("div.series-title a");
             String series_url = series_choose.absUrl("href");
             System.out.println(series_url);
@@ -42,15 +44,21 @@ public class StoreController {
             Document doc = Jsoup.connect(series_url).get();
             Elements select_a = doc.select("div.chapter-name a");
 
-            Book book = storeService.findBookNByTitle(bookName);
+
             System.out.println(book.getTitle());
 
             List<ChapterResponse> chapterResponseList = storeService.findChaptersByBookId(book.getId());
             ModelMapper mapper = new ModelMapper();
             List<Chapter> chapters = new ArrayList<>();
 
+            int totalGet;
+            if(select_a.size() < 20){
+                totalGet = select_a.size();
+            }else{
+                totalGet = 20;
+            }
             // Lấy tối đa 10 chương
-            for (int i = 0; i < 10; i++){
+            for (int i = 0; i < totalGet; i++){
                 Element link = select_a.get(i);
 
                 System.out.println(link.text());
@@ -77,7 +85,7 @@ public class StoreController {
                 Chapter chapter;
                 if (i >= chapterResponseList.size()) {
                     chapter = new Chapter();
-                    chapter.setBook(book);
+                    chapter.setBook(mapper.map(book, Book.class));
                 } else {
                     chapter = chapterList.get(i);
                 }
@@ -96,11 +104,12 @@ public class StoreController {
     }
 
 
-    @GetMapping("api/test/{name}")
-    public ResponseEntity<List<BookResponse>> getStoreTest(@PathVariable String name) {
-        setup(name);
-        return null;
+    @GetMapping("api/store/scrape/{id}")
+    public Boolean getStoreTest(@PathVariable Long id) {
+        setup(id);
+        return true;
     }
+
     @GetMapping("/api/store")
     public ResponseEntity<List<BookResponse>> getStore() {
         List<BookResponse> listBook = storeService.findAllBooks();

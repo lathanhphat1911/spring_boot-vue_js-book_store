@@ -129,8 +129,8 @@ Thế giới bên trong cuốn tiểu thuyết cậu viết nên, nhưng đã b�
 Bản thân cậu, vị tác giả nắm giữ quyền lực tối cao, lại trở thành một nhân vật phụ vô danh làm nền cho chính chuyện - và đó cũng là manh mối duy nhất có thể đưa cậu trở về thế giới của mình.
 
 Thêm nữa, thế giới này lại không hoàn toàn giống với thế giới mà cậu đã sáng tạo nên.'),
-                                                    (N'Quy Hoàn Giả và Thánh Nữ Mù', 120000, 1, 'https://i.hako.vn/ln/series/covers/s14374-dc8d668f-f510-4aa8-8cbe-a3ed67ebb446.jpg', N'Kiếp này, tôi sẽ sống vì em.'),
-                                                    (N'Ác nhân muốn sống', 180000, 1, 'https://i.docln.net/lightnovel/covers/s11834-d767d92d-ef18-467c-9af1-1f38f6420e2c-m.jpg', N'Deculein, một con Boss cấp trung trong tựa game hạng AAA mà công ty tôi thiết kế.
+                                                    (N'Trùng Sinh Giả và Thánh Nữ Mù', 120000, 1, 'https://i.hako.vn/ln/series/covers/s14374-dc8d668f-f510-4aa8-8cbe-a3ed67ebb446.jpg', N'Kiếp này, tôi sẽ sống vì em.'),
+                                                    (N'The Villain Wants to Live', 180000, 1, 'https://i.docln.net/lightnovel/covers/s11834-d767d92d-ef18-467c-9af1-1f38f6420e2c-m.jpg', N'Deculein, một con Boss cấp trung trong tựa game hạng AAA mà công ty tôi thiết kế.
 
 Giờ đây tôi đã trở thành hắn.
 

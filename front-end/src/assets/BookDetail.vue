@@ -4,7 +4,7 @@ import { getBookById } from '../api/bookApi';
 import { nextTick, onMounted, ref } from "vue";
 import { getTagByBookId } from '../api/bookApi';
 import { getChapterByBookId } from '../api/bookApi';
-import { getBookFromSameAuthor } from '../api/bookApi';
+import { getBookFromSameAuthor, scrapeChapterContent } from '../api/bookApi';
 import { getAllBooks } from '../api/bookApi';
 import navBar from '../assets/implement/nav-bar.vue';
 import { useRouter } from "vue-router";
@@ -16,6 +16,8 @@ const id = route.params.id;
 const book = ref([]);
 
 const tags = ref([]);
+
+const scrapeStatus = ref(false);
 
 const chapters = ref([]);
 
@@ -30,6 +32,20 @@ function getBook() {
       await nextTick();
     })
     .catch(console.error);
+}
+
+function scrapeChapter() {
+  const buttonGet = document.getElementById('btnScrape')
+  buttonGet.style.backgroundColor = "lightGray";
+  buttonGet.style.pointerEvents = "none";
+
+  scrapeChapterContent(id)
+  .then(async res =>{
+      scrapeStatus.value = res.data;
+      if(res.data === true){
+        window.location.reload();
+      }
+  })
 }
 
 function getTags() {
@@ -97,6 +113,10 @@ function goChapterDetail(chapter){
   });
 }
 
+function getStatus(){
+  alert(scrapeStatus.value);
+}
+
 </script>
 
 <template>
@@ -129,6 +149,10 @@ function goChapterDetail(chapter){
           Continue reading
         </button>
 
+        <button id="btnScrape" class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="scrapeChapter()">
+          Scrape
+        </button>
+
         <div class="flex justify-between text-sm mb-2">
           <span>rental rights</span>
           <span class="text-gray-500">charge</span>
@@ -145,7 +169,7 @@ function goChapterDetail(chapter){
 
       <!-- Right Section -->
       <div class="right-section">
-        <div class="bg-white p-4 rounded-xl shadow mb-6 episodes">
+        <div class="bg-white p-4 rounded-xl shadow mb-6 episodes" style="padding-bottom: 5px !important;">
           <div class="category-bar">
             <button v-for="c in categories" :key="c" @click="currentTab = c"
               :class="['tab-btn', currentTab === c ? 'active' : '']">
