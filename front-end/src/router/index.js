@@ -32,6 +32,12 @@ const routes = [{
             import ("../assets/ListByTags.vue"),
         props: true
     },
+    {
+        path: "/login",
+        name: "login",
+        component: () =>
+            import("../assets/Login.vue"),
+    },
 ];
 
 const router = createRouter({
@@ -40,6 +46,15 @@ const router = createRouter({
     scrollBehavior() {
         return { top: 0 }; // luôn scroll lên top khi đổi route
     }
+});
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("jwt");
+  if (to.meta.requiresAuth && !token) {
+    next("/login");
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -1,71 +1,92 @@
 import axios from "axios";
+import api from "./interceptor";
 
 const API_BASE = "http://localhost:8080/api/store";
 
 export function getAllBooks() {
-    return axios.get(API_BASE);
+    return api.get(API_BASE);
 }
 
 export function getBookByTitle(title) {
-    return axios.get(`${API_BASE}/${title}`);
+    return api.get(`${API_BASE}/${title}`);
 }
 
 export function getBookByTop(topNumber) {
-    return axios.get(`${API_BASE}/top/${topNumber}`);
+    return api.get(`${API_BASE}/top/${topNumber}`);
 }
 
 export function getTagsByTop(topNumber) {
-    return axios.get(`${API_BASE}/top/tags/${topNumber}`);
+    return api.get(`${API_BASE}/top/tags/${topNumber}`);
 }
 
 export function getBooksByTopMinMax(min, max) {
-    return axios.get(`${API_BASE}/top/${min}/${max}`);
+    return api.get(`${API_BASE}/top/${min}/${max}`);
 }
 
 export function getImageUrlByGenre(name) {
-    return axios.get(`${API_BASE}/top/tags/image/${name}`);
+    return api.get(`${API_BASE}/top/tags/image/${name}`);
 }
 
 export function getBookById(id) {
-    return axios.get(`${API_BASE}/books/${id}`);
+    return api.get(`${API_BASE}/books/${id}`);
 }
 
 export function getTagByBookId(id) {
-    return axios.get(`${API_BASE}/tags/by/${id}`);
+    return api.get(`${API_BASE}/tags/by/${id}`);
 }
 
 export function getChapterByBookId(id) {
-    return axios.get(`${API_BASE}/chapter/by/${id}`);
+    return api.get(`${API_BASE}/chapter/by/${id}`);
 }
 
 export function getBookFromSameAuthor(id) {
-    return axios.get(`${API_BASE}/book/author/${id}`);
+    return api.get(`${API_BASE}/book/author/${id}`);
 }
 
 export function getChapterById(id) {
-    return axios.get(`${API_BASE}/book/chapter/${id}`);
+    return api.get(`${API_BASE}/book/chapter/${id}`);
 }
 
 export function getChapterFromSameBookById(id) {
-    return axios.get(`${API_BASE}/book/chapter/byBook/${id}`);
+    return api.get(`${API_BASE}/book/chapter/byBook/${id}`);
 }
 
 export function getNextChapterById(id){
-    return axios.get(`${API_BASE}/book/chapter/next/${id}`);
+    return api.get(`${API_BASE}/book/chapter/next/${id}`);
 }
 
 export function getPreviousChapterById(id){
-    return axios.get(`${API_BASE}/book/chapter/previous/${id}`);
+    return api.get(`${API_BASE}/book/chapter/previous/${id}`);
 }
 
 export function getBookByTag(id){
-    return axios.get(`${API_BASE}/books/tags/${id}`);
+    return api.get(`${API_BASE}/books/tags/${id}`);
 }
 
 export function searchBookByTitleLike(title){
-    return axios.get(`${API_BASE}/book/search/${title}`);
+    return api.get(`${API_BASE}/book/search/${title}`);
 }
 
 export function scrapeChapterContent(id){
-    return axios.get(`${API_BASE}/scrape/${id}`);
+    return api.get(`${API_BASE}/scrape/${id}`);
+}
+
+export async function login(username, password) {
+  const response = await axios.post(
+    "http://localhost:8080/api/authenticate",
+    {},
+    {
+      auth: {
+        username,
+        password
+      }
+    }
+  );
+
+  const token = response.data.token;
+
+  // Lưu token
+  localStorage.setItem("jwt", token);
+
+  return token;
 }

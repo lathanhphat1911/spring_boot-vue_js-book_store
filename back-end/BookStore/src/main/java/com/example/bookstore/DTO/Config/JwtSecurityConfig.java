@@ -1,5 +1,7 @@
 package com.example.bookstore.DTO.Config;
 
+
+
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -21,6 +23,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.KeyPair;
@@ -46,9 +50,11 @@ public class JwtSecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable())
+                .cors(Customizer.withDefaults())
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");////
+                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.POST, "/api/authenticate/**").permitAll();
+                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
                     authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
                     authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
                     authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
@@ -60,8 +66,23 @@ public class JwtSecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .oauth2ResourceServer(oAuth2 -> oAuth2
                         .jwt(jwt -> jwt
-                                .decoder(jwtDecoder)));
+                                .decoder(jwtDecoder)
+                                .jwtAuthenticationConverter(jwtAuthenticationConverter())));
         return http.build();
+    }
+
+    @Bean
+    JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter =
+                new JwtGrantedAuthoritiesConverter();
+
+        grantedAuthoritiesConverter.setAuthoritiesClaimName("scope");
+        grantedAuthoritiesConverter.setAuthorityPrefix("");
+        // vì token của bạn là ROLE_USER
+
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
+        return converter;
     }
 
     @Bean

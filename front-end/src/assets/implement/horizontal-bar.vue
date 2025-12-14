@@ -29,6 +29,11 @@ function goTags(id) {
   });
 }
 
+function getBook(){
+  alert(tags.value)
+  console.log(tags.value)
+}
+
 onMounted(() => {
   loadTags();
 });
