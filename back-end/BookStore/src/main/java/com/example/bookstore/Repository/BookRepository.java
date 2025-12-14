@@ -26,5 +26,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findByTags_Id(Long tagId);
 
+    List<Book> findBookByBuyers(User user);
 
+    boolean existsByIdAndBuyers_Username(Long id, String username);
+    boolean existsByIdAndBuyers_Email(Long id, String email);
 }

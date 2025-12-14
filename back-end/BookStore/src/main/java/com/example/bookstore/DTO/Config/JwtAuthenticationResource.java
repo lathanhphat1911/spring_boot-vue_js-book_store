@@ -5,9 +5,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class JwtAuthenticationResource {
     private final JwtEncoder jwtEncoder;
+
+    @GetMapping("/me")
+    public String me(Principal principal) {
+        return principal.getName();
+    }
 
     @PostMapping("/api/authenticate")
     public JwtResponse jwtResponse(Authentication authentication){

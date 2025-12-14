@@ -4,7 +4,7 @@ import { getBookById } from '../api/bookApi';
 import { nextTick, onMounted, ref } from "vue";
 import { getTagByBookId } from '../api/bookApi';
 import { getChapterByBookId } from '../api/bookApi';
-import { getBookFromSameAuthor, scrapeChapterContent } from '../api/bookApi';
+import { getBookFromSameAuthor, scrapeChapterContent, checkOwnership } from '../api/bookApi';
 import { getAllBooks } from '../api/bookApi';
 import navBar from '../assets/implement/nav-bar.vue';
 import { useRouter } from "vue-router";
@@ -25,6 +25,8 @@ const authoredBooks = ref([]);
 
 const allBooks = ref([]);
 
+const ownership = ref();
+
 function getBook() {
   getBookById(id)
     .then(async res => {
@@ -32,6 +34,15 @@ function getBook() {
       await nextTick();
     })
     .catch(console.error);
+}
+
+function getOwnership(){
+  checkOwnership(id)
+  .then(async res => {
+    ownership.value = res.data;
+    await nextTick();
+  })
+  .catch(console.error);
 }
 
 function scrapeChapter() {
@@ -90,6 +101,7 @@ onMounted(() => {
   getChapters();
   getAuthorsBooks();
   getAllBook();
+  getOwnership();
 });
 
 
@@ -114,7 +126,7 @@ function goChapterDetail(chapter){
 }
 
 function getStatus(){
-  alert(scrapeStatus.value);
+  alert(ownership.value);
 }
 
 </script>
@@ -122,7 +134,6 @@ function getStatus(){
 <template>
   <div class="page-container">
     <navBar></navBar>
-
     <div class="flex-rowed gap-6 p-6 bg-gray-100 min-h-screen" v-if="book">
       <!-- Left Section -->
       <div class="bg-white p-4 rounded-xl shadow left-section">
@@ -145,8 +156,11 @@ function getStatus(){
           </div>
         </div>
 
-        <button class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="goChapterDetail(chapters[0])">
+        <button id="btnRead" class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="goChapterDetail(chapters[0])" v-if="ownership">
           Continue reading
+        </button>
+        <button style="background-color: lightgray; pointer-events: none;" id="btnRead" class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="goChapterDetail(chapters[0])" v-else>
+          Not owned
         </button>
 
         <button id="btnScrape" class="w-100 p-3 font-semibold mb-4 btn btn-warning border rounded" @click="scrapeChapter()">
@@ -185,7 +199,14 @@ function getStatus(){
                 <li v-for="ch in chapters" :key="ch.id" class="flex items-center justify-between py-3 border-b">
 
 
-                  <div class="flex-rowed items-center gap-3" @click="goChapterDetail(ch)">
+                  <div class="flex-rowed items-center gap-3" @click="goChapterDetail(ch)" v-if="ownership">
+                    <img :src="book.imageUrl" class="rounded img_icon" />
+                    <div>
+                      <p class="font-bold">{{ ch.title }}</p>
+                      <p style="color: gray; font-weight: 0; max-width: fit-content;" class="text-limit">{{ ch.content }}</p>
+                    </div>
+                  </div>
+                  <div class="flex-rowed items-center gap-3" @click="goChapterDetail(ch)" v-else style="pointer-events: none; background-color: lightgray;">
                     <img :src="book.imageUrl" class="rounded img_icon" />
                     <div>
                       <p class="font-bold">{{ ch.title }}</p>

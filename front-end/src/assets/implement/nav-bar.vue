@@ -2,6 +2,8 @@
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import {searchBookByTitleLike} from '../../api/bookApi'
+import { getToken } from '@/api/authSevice';
+import { logout } from '@/api/authSevice';
 
 const router = useRouter();
 
@@ -41,6 +43,24 @@ function goDetail(book) {
     state: { book } 
   });
 }
+
+function logOut(){
+  logout();
+  location.reload();
+}
+
+function goLogin(){
+  router.push({
+    name: "login"
+  })
+}
+
+function getMap(){
+  
+  alert(getToken())
+}
+
+let hasToken = ref(getToken())
 </script>
 
 <template>
@@ -70,9 +90,12 @@ function goDetail(book) {
               <p class="text-limit">{{ b.title || b }}</p>
           </div>
         </div>
-        <button @click="alertaa()" class="btn btn-warning">Tìm kiếm</button>
+        <button @click="logOut()" class="btn btn-warning">Tìm kiếm</button>
         <span class="icon">🛒</span>
-        <span class="icon">😊</span>
+        <span class="icon" v-if="hasToken !== null" @click="logOut()">😊</span>
+        <span class="icon" v-else>
+          <button class="btn btn-warning" @click="goLogin()">Login</button>
+        </span>
       </div>
     </header>
     

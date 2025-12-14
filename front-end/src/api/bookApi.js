@@ -71,6 +71,10 @@ export function scrapeChapterContent(id){
     return api.get(`${API_BASE}/scrape/${id}`);
 }
 
+export function checkOwnership(id){
+    return api.get(`http://localhost:8080/api/ownership/${id}`)
+}
+
 export async function login(username, password) {
   const response = await axios.post(
     "http://localhost:8080/api/authenticate",

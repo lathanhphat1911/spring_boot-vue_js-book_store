@@ -14,7 +14,8 @@ const routes = [{
         name: "bookDetail",
         component: () =>
             import ("../assets/BookDetail.vue"),
-        props: true
+        props: true,
+        meta: { requiresAuth: false }
     },
 
     {
@@ -37,6 +38,7 @@ const routes = [{
         name: "login",
         component: () =>
             import("../assets/Login.vue"),
+        
     },
 ];
 
@@ -49,11 +51,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("jwt");
-  if (to.meta.requiresAuth && !token) {
-    next("/login");
+    const token = localStorage.getItem("jwt")
+    if (to.name === "login" && token) {
+    next("/")
+    return
+  }
+
+  if (to.meta.requiresAuth && !localStorage.getItem("jwt")) {
+    next("/login")
   } else {
-    next();
+    next()
   }
 });
 

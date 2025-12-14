@@ -3,6 +3,7 @@ package com.example.bookstore.Service.imp;
 import com.example.bookstore.DTO.Book.BookRequest;
 import com.example.bookstore.DTO.Book.BookResponse;
 import com.example.bookstore.DTO.Chapter.ChapterResponse;
+import com.example.bookstore.DTO.Config.JwtAuthenticationResource;
 import com.example.bookstore.Entity.Book;
 import com.example.bookstore.Entity.Chapter;
 import com.example.bookstore.Entity.Tag;
@@ -193,6 +194,13 @@ public class StoreServiceImplementation implements StoreService {
                 .stream()
                 .map(book -> modelMapper.map(book, BookResponse.class)).toList();
     }
+
+    @Override
+    public Boolean checkOwnerShip(String usernameOrEmail, Long id) {
+        return bookRepository.existsByIdAndBuyers_Username(id, usernameOrEmail)
+                || bookRepository.existsByIdAndBuyers_Email(id, usernameOrEmail);
+    }
+
 //
 //    @Override
 //    public void saveAll(List<Chapter> newChapters) {

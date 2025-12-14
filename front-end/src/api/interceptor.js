@@ -7,13 +7,9 @@ const api = axios.create({
 api.interceptors.response.use(
   res => res,
   err => {
-    if (err.response?.status === 401) {
-      localStorage.removeItem("jwt");
-      window.location.href = "/login";
-    }
-    return Promise.reject(err);
+    return Promise.reject(err)
   }
-);
+)
 
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("jwt");

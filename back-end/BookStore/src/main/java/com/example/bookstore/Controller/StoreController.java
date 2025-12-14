@@ -3,6 +3,7 @@ package com.example.bookstore.Controller;
 import com.example.bookstore.DTO.Book.BookRequest;
 import com.example.bookstore.DTO.Book.BookResponse;
 import com.example.bookstore.DTO.Chapter.ChapterResponse;
+import com.example.bookstore.DTO.User.UserResponse;
 import com.example.bookstore.Entity.Book;
 import com.example.bookstore.Entity.Chapter;
 import com.example.bookstore.Entity.Tag;
@@ -17,12 +18,16 @@ import org.jsoup.select.Elements;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 @RestController
@@ -241,5 +246,12 @@ public class StoreController {
     public ResponseEntity<List<BookResponse>> getBooksByName(@PathVariable("name") String name){
         List<BookResponse> bookResponses = storeService.findBookLikeTitle(name);
         return ResponseEntity.ok(bookResponses);
+    }
+
+    @GetMapping("/api/ownership/{id}")
+    public Boolean ownership(@PathVariable("id") Long id, Authentication authentication){
+        String username = authentication.getName();
+        Boolean checkOwnership = storeService.checkOwnerShip(username, id);
+        return checkOwnership;
     }
 }
