@@ -1,7 +1,7 @@
-INSERT INTO users (name, username, password, email, budget) VALUES
-                                                                    ('Alice Nguyen', 'alice', 'alice123', 'alice@gmail.com', 500000),
-                                                                    ('Bob Tran', 'bob', 'bob123', 'bob@gmail.com', 350000),
-                                                                    ('Charlie Le', 'charlie', 'charlie123', 'charlie@gmail.com', 900000);
+INSERT INTO users (name, username, password, email, budget, role) VALUES
+                                                                    ('Alice Nguyen', 'alice', 'alice123', 'alice@gmail.com', 500000, 'ADMIN'),
+                                                                    ('Bob Tran', 'bob', 'bob123', 'bob@gmail.com', 350000, 'USER'),
+                                                                    ('Charlie Le', 'charlie', 'charlie123', 'charlie@gmail.com', 900000, 'USER');
 
 INSERT INTO books (title, price, author_id, image_url, description) VALUES
                                                     (N'Nhân vật chính trong truyện lãng mạn kỳ ảo chỉ thích mình tôi', 120000, 1, 'https://i2.hako.vip/ln/series/covers/s24127-88e2f7b2-88e2-44a7-8a22-6587c2056d80.jpg', N'Quý cô sa cơ Marigold, cho đến khi em hạnh phúc.'),

@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +28,8 @@ public class User {
     private String email;
 
     private String password;
+
+    private String role;
 
     @OneToMany(mappedBy = "author")
     @JsonIgnore

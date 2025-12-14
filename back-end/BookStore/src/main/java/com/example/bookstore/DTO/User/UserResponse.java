@@ -21,6 +21,8 @@ public class UserResponse {
 
     private String email;
 
+    private String role;
+
     private int booksWritten;
 
     private int booksOwned;

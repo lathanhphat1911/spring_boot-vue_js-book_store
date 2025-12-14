@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Chapter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
