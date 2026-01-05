@@ -55,6 +55,12 @@ function goLogin(){
   })
 }
 
+function goManage(){
+  router.push({
+    name: "author_workspace"
+  })
+}
+
 function getMap(){
   
   alert(getToken())
@@ -68,7 +74,7 @@ let hasToken = ref(getToken())
       <div @click="goHome()" class="logo">BookStore</div>
       <nav class="nav">
         <a href="#">Home</a>
-        <a href="#">웹툰</a>
+        <a style="cursor: pointer;" @click="goManage()">Manage</a>
         <a href="#">웹소설</a>
         <a href="#">책</a>
         <a href="#">바로가기</a>
@@ -90,8 +96,7 @@ let hasToken = ref(getToken())
               <p class="text-limit">{{ b.title || b }}</p>
           </div>
         </div>
-        <button @click="logOut()" class="btn btn-warning">Tìm kiếm</button>
-        <span class="icon">🛒</span>
+        <button @click="logOut()" v-if="hasToken !== null" class="btn btn-warning">Đăng xuất</button>
         <span class="icon" v-if="hasToken !== null" @click="logOut()">😊</span>
         <span class="icon" v-else>
           <button class="btn btn-warning" @click="goLogin()">Login</button>

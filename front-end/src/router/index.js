@@ -40,6 +40,18 @@ const routes = [{
             import("../assets/Login.vue"),
         
     },
+    {
+        path: "/author_workspace",
+        name: "author_workspace",
+        component: () =>
+            import("../assets/AuthorWorkspace.vue"),
+    },
+    {
+        path: "/author_story_details/:id",
+        name: "author_story_details",
+        component: () =>
+            import("../assets/AuthorStoryDetails.vue")
+    }
 ];
 
 const router = createRouter({
