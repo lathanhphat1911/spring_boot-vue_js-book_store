@@ -75,6 +75,10 @@ export function checkOwnership(id){
     return api.get(`http://localhost:8080/api/ownership/${id}`)
 }
 
+export function getAuthoredBooks(){
+    return api.get(`${API_BASE}/manage/getBooksByAuthor`)
+}
+
 export async function login(username, password) {
   const response = await axios.post(
     "http://localhost:8080/api/authenticate",

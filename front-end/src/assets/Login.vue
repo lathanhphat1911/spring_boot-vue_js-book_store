@@ -9,11 +9,8 @@ const password = ref("");
 const router = useRouter();
 
 async function handleLogin() {
-  alert(username.value)
-  alert(password.value)
   try {
     await login(username.value, password.value);
-    alert("Succeed")
     router.push("/");
   } catch (e) {
     console.log(e)

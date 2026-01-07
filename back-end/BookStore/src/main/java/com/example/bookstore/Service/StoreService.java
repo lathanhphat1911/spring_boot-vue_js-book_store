@@ -56,4 +56,8 @@ public interface StoreService {
     List<BookResponse> findBookLikeTitle(String name);
 
     Boolean checkOwnerShip(String usernameOrEmail, Long id);
+
+    List<BookResponse> findBookByAuthorId(Long id);
+
+    BookResponse addNewBook(BookRequest book);
 }

@@ -12,32 +12,48 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div @click="isCreateModalOpen = true"
-                                class="border-2 border-dashed border-gray-300 rounded-2xl flex flex-col items-center justify-center h-80 cursor-pointer hover:bg-gray-100 transition p-6 bg-white">
-                                <div
-                                    class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4 text-2xl text-gray-400">
-                                    +</div>
-                                <span class="font-medium text-gray-600">Post New Work</span>
+                            <div @click="isCreateModalOpen = true" class="
+                                        group 
+                                        border-2 border-dashed border-gray-300 rounded-2xl 
+                                        flex flex-col items-center justify-center h-80 cursor-pointer 
+                                        transition-all duration-300 p-6 bg-white 
+                                        hover:border-yellow-400 hover:bg-yellow-50 hover:shadow-lg
+                                    ">
+                                <div class="
+                                        w-12 h-12 rounded-full flex items-center justify-center mb-4 text-2xl 
+                                        bg-gray-100 text-gray-400 
+                                        group-hover:bg-yellow-400 group-hover:text-white transition-colors duration-300
+                                    ">
+                                    +
+                                </div>
+
+                                <span class="
+                                        font-medium text-gray-600 
+                                        group-hover:text-yellow-600 transition-colors duration-300
+                                    ">
+                                    Post New Work
+                                </span>
                             </div>
 
-                            <div v-for="story in stories" :key="story.id"
+                            <div v-for="b in books" :key="b.id"
                                 class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer flex flex-col">
                                 <div class="relative h-48 bg-gray-100">
-                                    <img :src="story.cover" class="w-full h-full object-cover" />
+                                    <img style="object-fit: contain;" :src="b.imageUrl"
+                                        class="w-full h-full object-cover" />
                                     <span
                                         class="absolute top-3 right-3 px-2 py-1 bg-white/90 text-[10px] font-black rounded uppercase shadow-sm border border-gray-100">
-                                        {{ story.status }}
+                                        {{ b.price }}
                                     </span>
                                 </div>
 
                                 <div class="p-5 flex-1">
-                                    <h3 class="font-bold text-lg text-gray-800">{{ story.title }}</h3>
+                                    <h3 class="font-bold text-lg text-gray-800">{{ b.title }}</h3>
                                     <div class="flex items-center text-gray-400 text-xs mt-2 space-x-4 font-medium">
-                                        <span>📚 {{ story.chapters.length }} Chapters</span>
-                                        <span>🕒 {{ story.updatedAt }}</span>
+                                        <span>📚 {{ b.authorId }} Chapters</span>
+                                        <span>🕒 {{ b.id }}</span>
                                     </div>
 
-                                    <button @click.stop="goStoryDetail(story.id)"
+                                    <button @click.stop="goStoryDetail(b.id)"
                                         class="mt-4 w-full py-2 bg-gray-50 hover:bg-gray-100 text-gray-600 font-bold rounded-lg text-sm border border-gray-100 transition">
                                         Edit Content >
                                     </button>
@@ -65,14 +81,19 @@
                                     class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-yellow-400" />
                             </div>
                             <div>
-                                <label class="text-[10px] font-black text-gray-400 uppercase">Author Alias</label>
-                                <input v-model="newStory.author" placeholder="e.g. Charlie Le"
+                                <label class="text-[10px] font-black text-gray-400 uppercase">Price</label>
+                                <input v-model="newStory.price" placeholder="e.g. Charlie Le"
                                     class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-yellow-400" />
                             </div>
                         </div>
                         <div>
+                            <label class="text-[10px] font-black text-gray-400 uppercase">Image Url</label>
+                            <textarea v-model="newStory.imageUrl" rows="1"
+                                class="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-yellow-400"></textarea>
+                        </div>
+                        <div>
                             <label class="text-[10px] font-black text-gray-400 uppercase">Synopsis</label>
-                            <textarea v-model="newStory.synopsis" rows="3"
+                            <textarea v-model="newStory.description" rows="3"
                                 class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:border-yellow-400"></textarea>
                         </div>
                         <div class="flex gap-4">
@@ -89,11 +110,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, nextTick } from 'vue'
 import AuthorStoryDetails from './AuthorStoryDetails.vue'
 import navBar from './implement/nav-bar.vue'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getAllBooks, getAuthoredBooks, getBookById } from '@/api/bookApi'
 
 const isCreateModalOpen = ref(false)
 const currentStory = ref(null)
@@ -113,16 +135,35 @@ function goStoryDetail(id) {
 }
 
 const addNewStory = () => {
-    stories.unshift({
-        ...newStory,
-        id: Date.now(),
-        cover: `https://picsum.photos/seed/${Date.now()}/400/250`,
-        status: 'Ongoing',
-        updatedAt: 'Just now',
-        chapters: []
-    })
-    isCreateModalOpen.value = false
+    // stories.unshift({
+    //     ...newStory,
+    //     id: Date.now(),
+    //     cover: `https://picsum.photos/seed/${Date.now()}/400/250`,
+    //     status: 'Ongoing',
+    //     updatedAt: 'Just now',
+    //     chapters: []
+    // })
+    // isCreateModalOpen.value = false
+    alert(newStory.title);
 }
 
+const books = ref({});
+
+function getBook() {
+    getAuthoredBooks()
+        .then(async res => {
+            books.value = res.data;
+            await nextTick();
+        })
+        .catch(console.error);
+}
+
+onMounted(() => {
+    getBook();
+});
 
 </script>
+
+<style scoped>
+.hoverable:hover {}
+</style>

@@ -3,6 +3,7 @@ package com.example.bookstore.Controller;
 import com.example.bookstore.DTO.Book.BookRequest;
 import com.example.bookstore.DTO.Book.BookResponse;
 import com.example.bookstore.DTO.Chapter.ChapterResponse;
+import com.example.bookstore.DTO.Config.SecurityIns.CustomUserDetailsService;
 import com.example.bookstore.DTO.User.UserResponse;
 import com.example.bookstore.Entity.Book;
 import com.example.bookstore.Entity.Chapter;
@@ -10,6 +11,7 @@ import com.example.bookstore.Entity.Tag;
 import com.example.bookstore.Entity.User;
 import com.example.bookstore.Service.StoreService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.apache.coyote.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -253,5 +255,20 @@ public class StoreController {
         String username = authentication.getName();
         Boolean checkOwnership = storeService.checkOwnerShip(username, id);
         return checkOwnership;
+    }
+
+    @GetMapping("/api/store/manage/getBooksByAuthor")
+    public ResponseEntity<List<BookResponse>> getBooksByAuthor(Authentication authentication){
+        String username = authentication.getName();
+        System.out.println(username);
+        User user = storeService.findUserByName(username);
+        System.out.println(user);
+        List<BookResponse> bookResponses = storeService.findBookByAuthor(user);
+        return ResponseEntity.ok(bookResponses);
+    }
+
+    @PostMapping("/api/store/manage/addNewBook")
+    public ResponseEntity<BookResponse> addNewBook(@RequestBody BookRequest book){
+        return ResponseEntity.ok(storeService.addNewBook(book));
     }
 }

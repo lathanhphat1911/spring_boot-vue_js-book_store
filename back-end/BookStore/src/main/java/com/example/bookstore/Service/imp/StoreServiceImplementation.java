@@ -168,8 +168,7 @@ public class StoreServiceImplementation implements StoreService {
 
     @Override
     public User findUserByName(String seriesAuthor) {
-        User user = userRepository.findByName(seriesAuthor);
-
+        User user = userRepository.findUserByUsernameLikeIgnoreCase(seriesAuthor);
         return user;
     }
 
@@ -201,11 +200,19 @@ public class StoreServiceImplementation implements StoreService {
                 || bookRepository.existsByIdAndBuyers_Email(id, usernameOrEmail);
     }
 
-//
-//    @Override
-//    public void saveAll(List<Chapter> newChapters) {
-//
-//    }
+    @Override
+    public List<BookResponse> findBookByAuthorId(Long id) {
+        return bookRepository.findBooksByAuthorId(id).stream().map(book -> modelMapper.map(book, BookResponse.class)).toList();
+    }
+
+    @Override
+    public BookResponse addNewBook(BookRequest book) {
+        Book bookOriginal = modelMapper.map(book, Book.class);
+        bookOriginal.setId(null);
+        bookRepository.save(bookOriginal);
+        BookResponse responses = modelMapper.map(bookOriginal, BookResponse.class);
+        return responses;
+    }
 
     @Override
     public BookResponse saveBook(BookRequest book) {

@@ -55,9 +55,9 @@ public class JwtSecurityConfig {
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
                     authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.POST, "/api/authenticate/**").permitAll();
                     authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.GET, "/api/**").permitAll();
-                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
-                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.PUT, "/api/**").hasRole("ADMIN");
-                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
+                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.POST, "/api/**").permitAll();
+                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.PUT, "/api/**").permitAll();
+                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE, "/api/**").permitAll();
 //
 //                    authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER", "MANAGER");
 

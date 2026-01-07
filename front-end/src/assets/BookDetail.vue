@@ -226,7 +226,7 @@ function getStatus(){
 
         <div class="bg-white p-4 rounded-xl shadow mb-6">
           <h3 class="text-lg font-bold mb-4">Web novels to read along</h3>
-          <div class="h-grid grid-cols-4 gap-4">
+          <div class="h-grid gap-4">
             <div @click="goDetail(a)" v-for="a in allBooks" :key="a.id" class="text-centered" :style="{
               backgroundImage: `linear-gradient(to top, rgba(0,0,0,1.7), rgba(0,0,0,0)), url(${a.imageUrl})`,
               backgroundSize: 'cover',
@@ -242,7 +242,7 @@ function getStatus(){
 
         <div class="bg-white p-4 rounded-xl shadow">
           <h3 class="text-lg font-bold mb-4">Other works by this author</h3>
-          <div class="h-grid grid-cols-4 gap-4">
+          <div class="h-grid gap-4">
             <div @click="goDetail(a)" v-for="a in authoredBooks" :key="a.id" class="text-centered" :style="{
               backgroundImage: `linear-gradient(to top, rgba(0,0,0,1.7), rgba(0,0,0,0)), url(${a.imageUrl})`,
               backgroundSize: 'cover',

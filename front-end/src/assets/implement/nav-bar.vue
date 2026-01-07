@@ -46,7 +46,7 @@ function goDetail(book) {
 
 function logOut(){
   logout();
-  location.reload();
+  window.location.href = "/";
 }
 
 function goLogin(){
@@ -56,6 +56,13 @@ function goLogin(){
 }
 
 function goManage(){
+  const token = localStorage.getItem("jwt")
+  if(token == null || token == ""){
+    router.push({
+      name: "login"
+    })
+    return
+  }
   router.push({
     name: "author_workspace"
   })
@@ -73,7 +80,7 @@ let hasToken = ref(getToken())
     <header class="header">
       <div @click="goHome()" class="logo">BookStore</div>
       <nav class="nav">
-        <a href="#">Home</a>
+        <a style="cursor: pointer;" @click="goHome()">Home</a>
         <a style="cursor: pointer;" @click="goManage()">Manage</a>
         <a href="#">웹소설</a>
         <a href="#">책</a>
